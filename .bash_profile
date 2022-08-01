@@ -1,0 +1,90 @@
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Add java if it is present
+javafile=/usr/lib/jvm/.java
+if [ -f "$javafile" ] && [ -r "$javafile" ]; then
+    source "$javafile";
+fi
+unset javafile;
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+	[ -f "$file" ] && [ -r "$file" ] && source "$file";
+done;
+unset file;
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell;
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+	shopt -s "$option" 2> /dev/null;
+done;
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# Enable tab completion for `g` by marking it as an alias for `git`
+if type _git &> /dev/null; then
+	complete -o default -o nospace -F _git g;
+fi;
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+
+# Add NVM if it exists
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+# SSH auto-completion based on entries in known_hosts.
+if [[ -e ~/.ssh/known_hosts ]]; then
+    complete -o default -W "$(cat ~/.ssh/known_hosts | sed 's/[, ].*//' | sort | uniq | grep -v '[0-9]')" ssh scp sftp
+fi
