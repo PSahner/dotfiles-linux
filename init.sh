@@ -146,47 +146,50 @@ done
 
 whoIsIt=$(id -u);
 if [ ! $whoIsIt -eq 0 ]; then
-    echo "Please start this script as root with 'sudo'";
+    echo "ERROR: Please start this script as root with 'sudo'";
     exit 1
 fi;
 unset whoIsIt
 
 if [ ! -z $userName ] && [ id -u $userName > /dev/null 2>&1 ]; then
-    echo "Found user with the name: $userName"
+    echo "INFO: Found user with the name: $userName"
     homePath=$(sudo -u $userName sh -c 'echo $HOME')
-    echo "... corresponding home path: $homePath"
+    echo "INFO: Corresponding home path: $homePath"
 elif [ $isForce -eq 1 ]; then
-    echo "Please provide your username"
+    echo "ERROR: Please provide your username"
     exit 1
 else
     read -p "Provide your username: " MYUSER;
     if [ ! -z $MYUSER ] && [ `id -u $userName 2>/dev/null || echo -1` -ge 0 ]; then
         userName=$MYUSER
-        echo "Found user with the name: $userName"
+        echo "INFO: Found user with the name: $userName"
         homePath=$(sudo -u $userName sh -c 'echo $HOME')
-        echo "... corresponding home path: $homePath"
+        echo "INFO: Corresponding home path: $homePath"
     else
-        echo "Please provide an existing username"
+        echo "ERROR: Please provide an existing username"
         exit 1
     fi;
 fi;
 unset MYUSER
 
 if [ ! -z $javaType ] && [ -z $javaVersion ]; then
-    echo "You specified a Java type but did not provide a Java version"
+    echo "ERROR: You specified a Java type but did not provide a Java version"
     exit 1
 elif [ -z $javaType ] && [ ! -z $javaVersion ]; then
-    echo "You specified a Java version but did not provide a Java type"
+    echo "ERROR: You specified a Java version but did not provide a Java type"
     exit 1
 fi;
 
 # Make sure we’re using the latest apt-get index.
+echo "INFO: Updating Apt-Get..."
 DEBIAN_FRONTEND=noninteractive apt-get update -y --no-install-recommends
 
 # Upgrade any already-installed packages.
+echo "INFO: Upgarding via Apt-Get ..."
 DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --no-install-recommends
 
 # Install some basic packages.
+echo "INFO: Install unzip, vim, wget, ca-certificates, gnupg2, net-tools, xclip and curl..."
 DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unzip vim wget ca-certificates gnupg2 net-tools xclip curl
 
 javaVersion=$(($javaVersion + 0))
@@ -213,14 +216,17 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
 
     javaVersion=$(($javaVersion + 0))
     if [ "$javaType" = "O" ] || [ "$javaType" = "o" ] || [ "$JAVATYPE" = "S" ] || [ "$JAVATYPE" = "s" ]; then
+        
         if [ -n $javaVersion ] && [ $javaVersion -gt 0 ] && [ $javaVersion -lt 100 ]; then
             touch .java
             mv .java /usr/lib/jvm/
-
+            echo "INFO: Downloading Java ...";
             if [ "$javaType" = "O" ] || [ "$javaType" = "o" ]; then
+                echo "INFO:... OpenJDK version: $javaVersion ...";
                 DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-$javaVersion-jdk
                 echo "export JAVA_HOME=/usr/lib/jvm/java-$javaVersion-openjdk-amd64" >> /usr/lib/jvm/.java
             elif [ "$javaType" = "S" ] || [ "$javaType" = "s" ]; then
+                echo "INFO:... SapMachine version: $javaVersion ...";
                 export GNUPGHOME="$(mktemp -d)"
                 wget -q -O - https://dist.sapmachine.io/debian/sapmachine.old.key | gpg --batch --import
                 gpg --batch --export --armor 'DA4C 00C1 BDB1 3763 8608 4E20 C7EB 4578 740A EEA2' > /etc/apt/trusted.gpg.d/sapmachine.old.gpg.asc
@@ -236,8 +242,11 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
             fi;
 
             echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /usr/lib/jvm/.java
-
+        else
+            echo "WARNING: Java version check failed";
         fi;
+    else
+        echo "WARNING: Java type check failed";
     fi;
 fi;
 unset INSTALLJAVA
@@ -261,6 +270,8 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
         nodeVersion=$NODEV
         nodeVersion=$(($nodeVersion + 0))
     fi;
+
+    echo "INFO: Downloading Node JS ...";
     
     sudo -u $userName curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sudo -u $userName bash
     
@@ -275,9 +286,11 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
     # fi;
 
     if [ -n $nodeVersion ] && [ $nodeVersion -gt 0 ] && [ $nodeVersion -lt 100 ]; then
-        echo "Installing Node version: $nodeVersion"
+        echo "INFO: Installing Node JS version: $nodeVersion ...";
         # sudo -u $userName nvm install $nodeVersion
         su - $userName -c "nvm install $nodeVersion"
+    else
+        echo "WARNING: Node JS version check failed";
     fi;
 fi;
 unset INSTALLNODE
@@ -293,7 +306,7 @@ if [ -d $homePath/.npm ]; then
     fi;
     
     if [ "$YARN" = "Y" ] || [ "$YARN" = "y" ]; then
-        echo "Installing Yarn"
+        echo "INFO: Installing Yarn"
         sudo -u $userName npm install -g yarn
     fi;
 
@@ -308,7 +321,7 @@ if [ -d $homePath/.npm ]; then
 
     if [ "$ANGULAR" = "Y" ] || [ "$ANGULAR" = "y" ]; then
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
-            echo "Installing Angular version: $angularVersion"
+            echo "INFO: Installing Angular version: $angularVersion"
         else
             read -p "Angular version (e.g. 12): " ANGULARV;
             angularVersion=$ANGULARV
@@ -317,6 +330,8 @@ if [ -d $homePath/.npm ]; then
         
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
             sudo -u $userName npm install -g @angular/cli@$angularVersion
+        else
+            echo "WARNING: Angular version check failed";
         fi;
     fi;
 
@@ -335,6 +350,7 @@ apt-get clean
 # done
 
 # run the bootstrap script in init mode (only necessary after first distribution setup)
+echo "INFO: starting bootstrapping..."
 sudo -u $userName bash bootstrap.sh --init
 
 unset isForce
