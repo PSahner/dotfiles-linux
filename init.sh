@@ -218,12 +218,15 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
     if [ $javaType = "O" ] || [ $javaType = "o" ] || [ $javaType = "S" ] || [ $javaType = "s" ]; then
         
         if [ -n $javaVersion ] && [ $javaVersion -gt 0 ] && [ $javaVersion -lt 100 ]; then
+            if [ -f /usr/lib/jvm/.java ]; then
+                rm /usr/lib/jvm/.java
+            fi;
             touch .java
             mv .java /usr/lib/jvm/
             echo "INFO: Downloading Java ...";
             if [ "$javaType" = "O" ] || [ "$javaType" = "o" ]; then
                 echo "INFO:... OpenJDK version: $javaVersion ...";
-                DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-$javaVersion-jdk
+                DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-$javaVersion-jdk    
                 echo "export JAVA_HOME=/usr/lib/jvm/java-$javaVersion-openjdk-amd64" >> /usr/lib/jvm/.java
             elif [ "$javaType" = "S" ] || [ "$javaType" = "s" ]; then
                 echo "INFO:... SapMachine version: $javaVersion ...";
@@ -237,7 +240,6 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
 
                 DEBIAN_FRONTEND=noninteractive apt-get update -y --no-install-recommends
                 DEBIAN_FRONTEND=noninteractive  apt-get install sapmachine-$javaVersion-jdk
-                # TODO: check if .java file already exists and then override it
                 echo "export JAVA_HOME=/usr/lib/jvm/sapmachine-$javaVersion" >> /usr/lib/jvm/.java
             fi;
 
@@ -288,11 +290,11 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
     if [ -n $nodeVersion ] && [ $nodeVersion -gt 0 ] && [ $nodeVersion -lt 100 ] && [ -d $homePath/.nvm ]; then
         echo "INFO: Installing Node JS version: $nodeVersion ...";
         # sudo -u $userName nvm install $nodeVersion
-        su - $userName -c "$homePath/.nvm/nvm install $nodeVersion"
+        su - $userName -c "$homePath/.nvm/nvm.sh install $nodeVersion"
     elif [ ! -d $homePath/.nvm ]; then
         echo "NVM not installed";
     else
-        echo "WARNING: Node JS version check failed with version: $nodeVersion OR ~/.nvm does not exist";
+        echo "WARNING: Node JS version check failed with version: $nodeVersion";
     fi;
 fi;
 unset INSTALLNODE
