@@ -234,6 +234,7 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
 
                 DEBIAN_FRONTEND=noninteractive apt-get update -y --no-install-recommends
                 DEBIAN_FRONTEND=noninteractive  apt-get install sapmachine-$javaVersion-jdk
+                # TODO: check if .java file already exists and then override it
                 echo "export JAVA_HOME=/usr/lib/jvm/sapmachine-$javaVersion" >> /usr/lib/jvm/.java
             fi;
 

@@ -168,21 +168,25 @@ fi
 # http://ss64.com/bash/syntax-prompt.html
 
 # Set the terminal title and prompt.
-NOW=$(date +"%d.%m.%Y %H:%M")
+NOW=$(date +"%d.%m.%Y")
 
 # ------------------------------------------------------------------
 # | PS1 - Default interactive prompt                               |
 # ------------------------------------------------------------------
 
 PS1="\n";
-PS1+="${wsl_name:+WSL Distro:\[${purple}\] $wsl_name\[${white}\]}"
+# PS1+="${wsl_name:+WSL Distro:\[${violet}\] $wsl_name\[${white}\]}"
 PS1+="\[${white}\]${debian_chroot:+($debian_chroot)}"
 PS1+=" - $NOW"
 PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)
 PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
-PS1+="\[${hostStyle}\]\h"; # host
+if [ -f ~/.wslname ] && [ -r ~/.wslname ]; then
+    PS1+="\[${hostStyle}\] $wsl_name";
+else
+    PS1+="\[${hostStyle}\]\h"; # host
+fi
 PS1+="\[${white}\] in ";
 PS1+="\[${green}\]\w"; # working directory full path
 PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
