@@ -215,7 +215,7 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
     fi;
 
     javaVersion=$(($javaVersion + 0))
-    if [ "$javaType" = "O" ] || [ "$javaType" = "o" ] || [ "$JAVATYPE" = "S" ] || [ "$JAVATYPE" = "s" ]; then
+    if [ $javaType = "O" ] || [ $javaType = "o" ] || [ $JAVATYPE = S ] || [ $JAVATYPE = "s" ]; then
         
         if [ -n $javaVersion ] && [ $javaVersion -gt 0 ] && [ $javaVersion -lt 100 ]; then
             touch .java
