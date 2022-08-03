@@ -93,7 +93,6 @@ fi;
 unset doIt;
 unset REPLY;
 
-# TODO: check if .wslname file already exists and then override it
 if [ $isInit -eq 1 ]; then
     if [ $isForce -eq 0 ] && [ -z $wslName ]; then
         read -p "Do you want to add a special identifier to the terminal before the user name (y/n) " REPLY;
@@ -103,6 +102,9 @@ if [ $isInit -eq 1 ]; then
         fi;
     fi;
     if [ ! -z $wslName ]; then
+        if [ -f ~/.wslname ]; then
+            rm ~/.wslname
+        fi;
         touch ~/.wslname;
         echo "$wslName" >> ~/.wslname;
     fi;
