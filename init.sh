@@ -206,7 +206,7 @@ fi;
 if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
     if [ -z $javaType ]; then
         read -p "Select Java type -> [O]penJDK | [S]apMachine: " JAVATYPER;
-        javaType=$JAVATYPER
+        javaType="$JAVATYPER"
     fi;
     if [ $javaVersion -lt 1 ]; then
         read -p "Java version (e.g. 11): " JAVAVERSIONR;
@@ -243,10 +243,10 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
 
             echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /usr/lib/jvm/.java
         else
-            echo "WARNING: Java version check failed";
+            echo "WARNING: Java version check failed with version: $javaVersion";
         fi;
     else
-        echo "WARNING: Java type check failed";
+        echo "WARNING: Java type check failed with type: $javaType";
     fi;
 fi;
 unset INSTALLJAVA
@@ -290,7 +290,7 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
         # sudo -u $userName nvm install $nodeVersion
         su - $userName -c "nvm install $nodeVersion"
     else
-        echo "WARNING: Node JS version check failed";
+        echo "WARNING: Node JS version check failed with version: $nodeVersion";
     fi;
 fi;
 unset INSTALLNODE
@@ -331,7 +331,7 @@ if [ -d $homePath/.npm ]; then
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
             sudo -u $userName npm install -g @angular/cli@$angularVersion
         else
-            echo "WARNING: Angular version check failed";
+            echo "WARNING: Angular version check failed with version: $angularVersion";
         fi;
     fi;
 
