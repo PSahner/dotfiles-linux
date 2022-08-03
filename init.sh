@@ -285,12 +285,14 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
         # sudo -u $userName \. "$homePath/.nvm/nvm.sh"
     # fi;
 
-    if [ -n $nodeVersion ] && [ $nodeVersion -gt 0 ] && [ $nodeVersion -lt 100 ]; then
+    if [ -n $nodeVersion ] && [ $nodeVersion -gt 0 ] && [ $nodeVersion -lt 100 ] && [ -d $homePath/.nvm ]; then
         echo "INFO: Installing Node JS version: $nodeVersion ...";
         # sudo -u $userName nvm install $nodeVersion
-        su - $userName -c "nvm install $nodeVersion"
+        su - $userName -c "$homePath/.nvm/nvm install $nodeVersion"
+    elif [ ! -d $homePath/.nvm ]; then
+        echo "NVM not installed";
     else
-        echo "WARNING: Node JS version check failed with version: $nodeVersion";
+        echo "WARNING: Node JS version check failed with version: $nodeVersion OR ~/.nvm does not exist";
     fi;
 fi;
 unset INSTALLNODE
@@ -307,7 +309,8 @@ if [ -d $homePath/.npm ]; then
     
     if [ "$YARN" = "Y" ] || [ "$YARN" = "y" ]; then
         echo "INFO: Installing Yarn"
-        sudo -u $userName npm install -g yarn
+        su - $userName -c "$homePath/.npm/npm install -g yarn"
+        # sudo -u $userName npm install -g yarn
     fi;
 
     angularVersion=$(($angularVersion + 0))
@@ -329,12 +332,14 @@ if [ -d $homePath/.npm ]; then
         fi;
         
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
-            sudo -u $userName npm install -g @angular/cli@$angularVersion
+            su - $userName -c "$homePath/.npm/npm install -g @angular/cli@$angularVersion"
+            # sudo -u $userName npm install -g @angular/cli@$angularVersion
         else
             echo "WARNING: Angular version check failed with version: $angularVersion";
         fi;
     fi;
-
+else
+    echo "INFO: NPM not installed"
 fi;
 unset YARN
 unset ANGULAR
