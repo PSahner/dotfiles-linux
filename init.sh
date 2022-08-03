@@ -160,9 +160,6 @@ elif [ $isForce -eq 1 ]; then
     exit 1
 else
     read -p "Provide your username: " MYUSER;
-    if [ ! -z $MYUSER ] && [ id -u "$MYUSER" > /dev/null 2>&1 ]; then
-        
-    fi;
     if [ ! -z $MYUSER ] && [ `id -u $userName 2>/dev/null || echo -1` -ge 0 ]; then
         userName=$MYUSER
         echo "Found user with the name: $userName"
