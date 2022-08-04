@@ -168,22 +168,33 @@ fi
 # http://ss64.com/bash/syntax-prompt.html
 
 # Set the terminal title and prompt.
-NOW=$(date +"%d.%m.%Y")
+now=$(date +"%d.%m.%Y")
+
+linux_type=$(lsb_release -d -s)
+kernel=$(uname -r)
+if grep -qi microsoft /proc/version; then
+    kernel="${linux_type:+\[${violet}\]($linux_type) \[${white}\]on }\[${blue}\]WSL"
+    if grep -qi WSL2 /proc/version; then
+        kernel="${linux_type:+\[${violet}\]($linux_type) \[${white}\]on }\[${blue}\]WSL2"
+    fi;
+fi;
 
 # ------------------------------------------------------------------
 # | PS1 - Default interactive prompt                               |
 # ------------------------------------------------------------------
 
-PS1="\n";
+PS1="PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)"
+# PS1="\n";
 # PS1+="${wsl_name:+WSL Distro:\[${violet}\] $wsl_name\[${white}\]}"
-PS1+="\[${white}\]${debian_chroot:+($debian_chroot)}"
-PS1+=" - $NOW"
-PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)
+# PS1+="\[${white}\]${debian_chroot:+($debian_chroot)}"
+# PS1+="$now"
+# PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)
+PS1+="${kernel:+($kernel\[${white}\])}"
 PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
 if [ -f ~/.wslname ] && [ -r ~/.wslname ]; then
-    PS1+="\[${hostStyle}\] $wsl_name";
+    PS1+="\[${hostStyle}\]$wsl_name";
 else
     PS1+="\[${hostStyle}\]\h"; # host
 fi
@@ -193,7 +204,7 @@ PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git r
 PS1+="\n";
 PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
 export PS1;
-unset NOW
+unset now
 
 # set-window-title() {
 #     echo -en "\033]0;$(pwd | sed -e "s;^$HOME;~;")\a"

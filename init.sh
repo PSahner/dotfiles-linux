@@ -290,7 +290,7 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
     if [ -n $nodeVersion ] && [ $nodeVersion -gt 0 ] && [ $nodeVersion -lt 100 ] && [ -d $homePath/.nvm ]; then
         echo "INFO: Installing Node JS version: $nodeVersion ...";
         # sudo -u $userName nvm install $nodeVersion
-        su - $userName -c "$homePath/.nvm/nvm.sh install $nodeVersion"
+        bash $homePath/.nvm/nvm.sh install $nodeVersion
     elif [ ! -d $homePath/.nvm ]; then
         echo "NVM not installed";
     else
@@ -301,19 +301,19 @@ unset INSTALLNODE
 
 if [ -d $homePath/.npm ]; then
 
-    if [ $installYarn ]; then
-        YARN="Y"
-    elif [ $isForce -eq 1 ]; then
-        YARN="N"
-    else
-        read -p "Install Yarn globally? (y/n) " YARN;
-    fi;
-    
-    if [ "$YARN" = "Y" ] || [ "$YARN" = "y" ]; then
-        echo "INFO: Installing Yarn"
-        su - $userName -c "$homePath/.npm/npm install -g yarn"
-        # sudo -u $userName npm install -g yarn
-    fi;
+    # if [ $installYarn ]; then
+    #     YARN="Y"
+    # elif [ $isForce -eq 1 ]; then
+    #     YARN="N"
+    # else
+    #     read -p "Install Yarn globally? (y/n) " YARN;
+    # fi;
+    # 
+    # if [ "$YARN" = "Y" ] || [ "$YARN" = "y" ]; then
+    #     echo "INFO: Installing Yarn"
+    #     bash $homePath/.npm/npm install -g yarn
+    #     # sudo -u $userName npm install -g yarn
+    # fi;
 
     angularVersion=$(($angularVersion + 0))
     if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
@@ -334,7 +334,7 @@ if [ -d $homePath/.npm ]; then
         fi;
         
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
-            su - $userName -c "$homePath/.npm/npm install -g @angular/cli@$angularVersion"
+            bash $homePath/.npm/npm install -g @angular/cli@$angularVersion
             # sudo -u $userName npm install -g @angular/cli@$angularVersion
         else
             echo "WARNING: Angular version check failed with version: $angularVersion";
