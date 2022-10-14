@@ -8,13 +8,13 @@ fi
 # If you come from bash you might have to change your $PATH.
 PATHFILE="$HOME/.path"
 if [ -f "$PATHFILE" ] && [ -r "$PATHFILE" ]; then
-    source "$PATHFILE";
+  source "$PATHFILE";
 fi
 
 # Exports
 EXPORTSFILE="$HOME/.exports"
 if [ -f "$EXPORTSFILE" ] && [ -r "$EXPORTSFILE" ]; then
-    source "$EXPORTSFILE";
+  source "$EXPORTSFILE";
 fi
 
 # Path to your oh-my-zsh installation.
