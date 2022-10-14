@@ -173,9 +173,9 @@ now=$(date +"%d.%m.%Y")
 linux_type=$(lsb_release -d -s)
 kernel=$(uname -r)
 if grep -qi microsoft /proc/version; then
-    kernel="${linux_type:+\[${violet}\]($linux_type) \[${white}\]on }\[${blue}\]WSL"
+    kernel="${linux_type:+\[${violet}\]$linux_type} \[${green}\](WSL)"
     if grep -qi WSL2 /proc/version; then
-        kernel="${linux_type:+\[${violet}\]($linux_type) \[${white}\]on }\[${blue}\]WSL2"
+        kernel="${linux_type:+\[${violet}\]$linux_type} \[${green}\](WSL2)"
     fi;
 fi;
 
@@ -183,13 +183,13 @@ fi;
 # | PS1 - Default interactive prompt                               |
 # ------------------------------------------------------------------
 
-PS1="PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)"
-# PS1="\n";
+PS1="\[\033]0;\W\007\]"; # working directory base name (Terminal title)"
+PS1+="\n";
 # PS1+="${wsl_name:+WSL Distro:\[${violet}\] $wsl_name\[${white}\]}"
 # PS1+="\[${white}\]${debian_chroot:+($debian_chroot)}"
 # PS1+="$now"
 # PS1+="\[\033]0;\W\007\]"; # working directory base name (Terminal title)
-PS1+="${kernel:+($kernel\[${white}\])}"
+PS1+="${kernel:+$kernel\[${white}\]}"
 PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";

@@ -72,13 +72,13 @@ unset currentDir;
 
 doIt() {
 	rsync --exclude ".DS_Store" \
-          --exclude ".git/" \
-		  --exclude ".osx" \
-          --exclude ".vscode" \
-		  --exclude "bootstrap.sh" \
-          --exclude "init.sh" \
-		  --exclude "README.md" \
-		  -avh --no-perms . ~;
+        --exclude ".git/" \
+		    --exclude ".osx" \
+        --exclude ".vscode" \
+		    --exclude "bootstrap.sh" \
+        --exclude "init.sh" \
+		    --exclude "README.md" \
+		    -avh --no-perms . ~;
 	source ~/.bash_profile;
 }
 

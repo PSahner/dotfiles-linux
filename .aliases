@@ -103,12 +103,16 @@ fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Directory listing
-if [[ "$(type -P tree)" ]]; then
+if [[ "$(type -p tree)" ]]; then
     alias ll='tree --dirsfirst -aLpughDFiC 1'
+    alias la='LC_COLLATE=C ls -Ahv --group-directories-first'
     alias lsd='ll -d'
+    alias lld='ll -d'
 else
     alias ll='ls -Alhv --group-directories-first'
+    alias la='LC_COLLATE=C ls -Ahv --group-directories-first'
     alias lsd='CLICOLOR_FORCE=1 ll | grep --color=never "^d"'
+    alias lld='ll -d'
 fi
 
 # Detect which `ls` flavor is in use

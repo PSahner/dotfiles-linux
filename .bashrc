@@ -5,3 +5,5 @@ case $- in
 esac
 
 [ -n "$PS1" ] && source ~/.bash_profile;
+
+eval ``keychain --eval --agents ssh id_rsa

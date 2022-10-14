@@ -35,3 +35,7 @@ export GPG_TTY=$(tty);
 
 # Hide the “default interactive shell is now zsh” warning on macOS.
 export BASH_SILENCE_DEPRECATION_WARNING=1;
+
+# set X server display
+# Fix if GUI Apps are not starting (https://github.com/microsoft/wslg/issues/818)
+export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)

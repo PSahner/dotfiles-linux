@@ -1,3 +1,8 @@
+[core]
+  autocrlf = input
+  eol = lf
+	filemode = false
+
 [alias]
 
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
