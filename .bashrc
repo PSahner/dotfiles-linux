@@ -6,4 +6,7 @@ esac
 
 [ -n "$PS1" ] && source ~/.bash_profile;
 
-eval ``keychain --eval --agents ssh id_rsa
+
+if [ -d "/usr/bin/keychain" ]; then
+  eval ``keychain --eval --agents ssh id_rsa
+fi
