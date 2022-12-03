@@ -20,11 +20,6 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Run SSh agent via keychain
-if [ -d "/usr/bin/keychain" ]; then
-  eval ``keychain --eval --agents ssh id_rsa
-fi
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -87,7 +82,9 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 ZSH_COLORIZE_STYLE="monokai"
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -d "/usr/share/zsh-autosuggestions" ]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -96,9 +93,13 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(aliases colorize command-not-found cp git jira node npm nvm pip themes)
 
-source $ZSH/oh-my-zsh.sh
+if [ -s "$ZSH/oh-my-zsh.sh" ]; then
+  source $ZSH/oh-my-zsh.sh
+fi
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -d "/usr/share/zsh-syntax-highlighting" ]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # User configuration
 

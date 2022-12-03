@@ -190,7 +190,7 @@ DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --no-install-recommends
 
 # Install some basic packages.
 echo "INFO: Install unzip, vim, wget, ca-certificates, gnupg2, net-tools, xclip and curl..."
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unzip vim wget ca-certificates gnupg2 net-tools xclip curl
+DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unzip zip vim wget ca-certificates gnupg2 net-tools xclip curl
 
 javaVersion=$(($javaVersion + 0))
 if [ "$javaType" = "O" ] || [ "$javaType" = "o" ] || [ "$JAVATYPE" = "S" ] || [ "$JAVATYPE" = "s" ]; then
