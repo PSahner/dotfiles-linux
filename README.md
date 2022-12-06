@@ -78,7 +78,7 @@ Here’s an example `~/.path` file that adds `/usr/local/bin` to the `$PATH`:
 export PATH="/usr/local/bin:$PATH"
 ```
 
-### Add custom commands without creating a new fork
+### Add custom commands without creating a new fork - *Outdated*
 
 If `~/.extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
 
@@ -99,6 +99,9 @@ git config --global credential.helper "$GIT_CREDENTIAL_HELPER"
 ```
 
 You could also use `~/.extra` to override settings, functions and aliases from these dotfiles repository. But then it is probably better to [fork this repository](https://github.com/psahner/dotfiles-linux/fork) instead.
+
+*Outdated Info:*
+Instead of using the Git Credential Manager you can also copy you SSH Key (from Windows) and use this for authorization and working with git instead of providing username and password everytime you restart your development environment, which is the case when working with Git Credential Manager. For SSH you need to start the SSH Agent on Ubuntu. This is already included in `.bashrc` and `.zshrc` and should work out of the box but could be documented here in more detail.
 
 ### Install Apt-Get / Apt packages
 
