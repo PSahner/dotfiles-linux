@@ -6,6 +6,11 @@ esac
 
 [ -n "$PS1" ] && source ~/.bash_profile;
 
+# Run SSH agent via keychain
+if [ -x "/usr/bin/keychain" ]; then
+  eval ``keychain --eval --agents ssh id_rsa
+fi
+
 # Add NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
