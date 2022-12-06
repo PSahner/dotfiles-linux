@@ -44,6 +44,6 @@ export BASH_SILENCE_DEPRECATION_WARNING=1;
 export DISPLAY=host.docker.internal:0
 
 # Run SSh agent via keychain
-if [ -d "/usr/bin/keychain" ]; then
-  eval ``keychain --eval --agents ssh id_rsa
-fi
+# if [ -d "/usr/bin/keychain" ]; then
+#   eval ``keychain --eval --agents ssh id_rsa
+# fi
