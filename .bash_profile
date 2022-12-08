@@ -68,3 +68,8 @@ fi
 if [ -d "/home/linuxbrew/.linuxbrew/bin" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+# Run SSH agent via keychain
+if [ -x "/usr/bin/keychain" ]; then
+  eval ``keychain --eval --agents ssh id_rsa
+fi
