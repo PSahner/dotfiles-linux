@@ -85,7 +85,8 @@
     gcloud                  # google cloud cli account and project (https://cloud.google.com/)
     google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
     toolbox                 # toolbox name (https://github.com/containers/toolbox)
-    context                 # user@hostname
+    # context               # user@hostname
+    distro_name
     nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
     ranger                  # ranger shell (https://github.com/ranger/ranger)
     nnn                     # nnn shell (https://github.com/jarun/nnn)
@@ -103,7 +104,7 @@
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     # cpu_arch              # CPU architecture
-    battery               # internal battery
+    # battery               # internal battery
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline                 # \n
@@ -892,11 +893,11 @@
 
   ##################################[ context: user@hostname ]##################################
   # Context color when running with privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=178
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=124
   # Context color in SSH without privileges.
   typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=180
   # Default context color (no privileges, no SSH).
-  typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=180
+  typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=166
 
   # Context format when running with privileges: bold user@hostname.
   # typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@%m'
@@ -1597,7 +1598,8 @@
   # Current time color.
   typeset -g POWERLEVEL9K_TIME_FOREGROUND=246
   # Format for the current time: 09:51:02. See `man 3 strftime`.
-  typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
+  # typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
+  typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M}'
   # If set to true, time will update when you hit enter. This way prompts for the past
   # commands will contain the start times of their commands as opposed to the default
   # behavior where they contain the end times of their preceding commands.
@@ -1615,6 +1617,16 @@
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
+
+  function prompt_distro_name() {
+  if [[ -n $USER ]] && [[ -n $WSL_DISTRO_NAME ]]; then
+    p10k segment -f 180 -t "%F{166} ${USER//\%/%%} %F{246}at %F{136}${WSL_DISTRO_NAME//\%/%%} "
+  elif [[ -n $USER ]]; then
+    p10k segment -f 180 -t "%F{166} ${USER//\%/%%}"
+  elif [[ -n $WSL_DISTRO_NAME ]]; then
+    p10k segment -f 180 -t "%F{136}${WSL_DISTRO_NAME//\%/%%} "
+  fi
+}
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See

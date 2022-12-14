@@ -159,7 +159,9 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 if [ -f ~/.wslname ] && [ -r ~/.wslname ]; then
-    wsl_name=$(cat ~/.wslname)
+    wsl_name=$(cat ~/.wslname);
+elif [ -n "${WSL_DISTRO_NAME}" ]; then
+    wsl_name=$WSL_DISTRO_NAME;
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -193,7 +195,7 @@ PS1+="${kernel:+$kernel\[${white}\]}"
 PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
-if [ -f ~/.wslname ] && [ -r ~/.wslname ]; then
+if [ -n "${wsl_name}" ]; then
     PS1+="\[${hostStyle}\]$wsl_name";
 else
     PS1+="\[${hostStyle}\]\h"; # host
