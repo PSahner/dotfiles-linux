@@ -60,13 +60,6 @@ fi;
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
 
-# Add NVM if it exists
-if [ -d "$HOME/.nvm" ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
-
 # SSH auto-completion based on entries in known_hosts.
 if [[ -e ~/.ssh/known_hosts ]]; then
   complete -o default -W "$(cat ~/.ssh/known_hosts | sed 's/[, ].*//' | sort | uniq | grep -v '[0-9]')" ssh scp sftp
@@ -74,4 +67,9 @@ fi
 # eval "$(/bin/brew shellenv)"
 if [ -d "/home/linuxbrew/.linuxbrew/bin" ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Run SSH agent via keychain
+if [ -x "/usr/bin/keychain" ]; then
+  eval ``keychain --eval --agents ssh id_rsa
 fi
