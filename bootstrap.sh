@@ -113,6 +113,16 @@ fi;
 unset REPLY;
 unset NAME;
 
+if [ ! -d "~/.vim/backups" ]; then
+  mkdir -p ~/.vim/backups
+fi;
+if [ ! -d "~/.vim/swaps" ]; then
+  mkdir -p ~/.vim/swaps
+fi;
+if [ ! -d "~/.vim/undo" ]; then
+  mkdir -p ~/.vim/undo
+fi;
+
 unset isForce;
 unset isUpdate;
 unset isInit;
