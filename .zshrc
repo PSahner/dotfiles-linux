@@ -1,3 +1,9 @@
+
+# Run SSH agent via keychain
+if [ -x "/usr/bin/keychain" ]; then
+  eval ``keychain --eval --agents ssh id_rsa
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -91,7 +97,7 @@ fi
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aliases colorize command-not-found cp git jira node npm nvm pip themes ssh-agent)
+plugins=(aliases colorize command-not-found cp git jira node npm pip themes)
 
 if [ -s "$ZSH/oh-my-zsh.sh" ]; then
   source $ZSH/oh-my-zsh.sh
