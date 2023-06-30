@@ -20,8 +20,13 @@ export HISTFILESIZE="${HISTSIZE}";
 export HISTCONTROL='ignoreboth';
 
 # Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
+if locale -a | grep -q 'en_US.utf8'; then
+  export LANG='en_US.UTF-8';
+  export LC_ALL='en_US.UTF-8';
+elif locale -a | grep -q 'C.UTF-8\|C.utf8'; then
+  export LANG='C.UTF-8';
+  export LC_ALL='C.UTF-8';
+fi
 
 # Highlight section titles in manual pages.
 export LESS_TERMCAP_md="${yellow}";
