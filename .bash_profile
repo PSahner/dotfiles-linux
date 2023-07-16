@@ -70,6 +70,8 @@ if [ -d "/home/linuxbrew/.linuxbrew/bin" ]; then
 fi
 
 # Run SSH agent via keychain
+# Check/modify ~/.ssh/config if/as needed
 if [ -x "/usr/bin/keychain" ]; then
-  eval ``keychain --eval --agents ssh id_rsa
+  # eval ``keychain --eval --agents ssh id_rsa
+  eval ``keychain --eval --agents ssh --confhost --ignore-missing --quiet
 fi

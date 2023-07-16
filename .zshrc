@@ -1,7 +1,9 @@
 
 # Run SSH agent via keychain
+# Check/modify ~/.ssh/config if/as needed
 if [ -x "/usr/bin/keychain" ]; then
-  eval ``keychain --eval --agents ssh id_rsa
+  # eval ``keychain --eval --agents ssh id_rsa
+  eval ``keychain --eval --agents ssh --confhost --ignore-missing --quiet
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
