@@ -16,17 +16,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-PATHFILE="$HOME/.path"
-if [ -f "$PATHFILE" ] && [ -r "$PATHFILE" ]; then
-  source "$PATHFILE";
-fi
-
-# Exports
-EXPORTSFILE="$HOME/.exports"
-if [ -f "$EXPORTSFILE" ] && [ -r "$EXPORTSFILE" ]; then
-  source "$EXPORTSFILE";
-fi
+for file in ~/.{path,exports,aliases,functions,extra}; do
+	[ -f "$file" ] && [ -r "$file" ] && source "$file";
+done;
+unset file;
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -137,10 +130,6 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-ALIASFILE="$HOME/.aliases"
-if [ -f "$ALIASFILE" ] && [ -r "$ALIASFILE" ]; then
-    source "$ALIASFILE";
-fi
 
 # Add NVM
 if [ -f "$HOME/.nvm/nvm.sh" ]; then
