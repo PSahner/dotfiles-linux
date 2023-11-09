@@ -1,3 +1,21 @@
+### remove unnecessary Win PATHs
+# This can prevent extension-less commands from bleeding into BASH.
+# (eg. "ng" would execute the Win bin if "@angular/cli" wasn't installed on Linux.)
+#
+function path_remove {
+  # Delete path by parts so we can never accidentally remove sub paths
+  PATH=${PATH//":$1:"/":"} # delete any instances in the middle
+  PATH=${PATH/#"$1:"/} # delete any instance at the beginning
+  PATH=${PATH/%":$1"/} # delete any instance in the at the end
+}
+path_remove '/mnt/c/Program Files/dotnet/'
+path_remove '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common'
+path_remove '/mnt/c/Program Files/Git/cmd'
+path_remove '/mnt/c/Users/psahner/AppData/Roaming/nvm'
+path_remove '/mnt/c/Program Files/nodejs'
+# path_remove '/mnt/c/Program Files/Docker/Docker/resources/bin'
+path_remove '/mnt/c/Users/psahner/AppData/Local/Microsoft/WindowsApps'
+path_remove '/mnt/c/Users/psahner/PortableApps/cmder'
 
 # Run SSH agent via keychain
 # Check/modify ~/.ssh/config if/as needed
@@ -95,7 +113,7 @@ fi
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aliases colorize command-not-found cp git jira node npm pip themes)
+plugins=(aliases colorize command-not-found cp git jira node npm nvm pip themes)
 
 if [ -s "$ZSH/oh-my-zsh.sh" ]; then
   source $ZSH/oh-my-zsh.sh
@@ -131,24 +149,16 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Add NVM
-if [ -f "$HOME/.nvm/nvm.sh" ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash completion
-fi
-
 # Load Angular CLI autocompletion.
 # ONLY Angular >= v14
 # source <(ng completion script)
 
-# mgnl-tabcompletion-start
 # load mgnl command tab completion
-if [ -f "$HOME/.mgnl/mgnl" ]; then
-  autoload bashcompinit
-  bashcompinit
-  source ~/.mgnl/mgnl
-fi
+# if [ -f "$HOME/.mgnl/mgnl" ]; then
+#   autoload bashcompinit
+#   bashcompinit
+#   source ~/.mgnl/mgnl
+# fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
@@ -158,23 +168,3 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-### remove unnecessary Win PATHs
-# This can prevent extension-less commands from bleeding into BASH.
-# (eg. "ng" would execute the Win bin if "@angular/cli" wasn't installed on Linux.)
-#
-function path_remove {
-  # Delete path by parts so we can never accidentally remove sub paths
-  PATH=${PATH//":$1:"/":"} # delete any instances in the middle
-  PATH=${PATH/#"$1:"/} # delete any instance at the beginning
-  PATH=${PATH/%":$1"/} # delete any instance in the at the end
-}
-
-path_remove '/mnt/c/Program Files/dotnet/'
-path_remove '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common'
-path_remove '/mnt/c/Program Files/Git/cmd'
-path_remove '/mnt/c/Users/psahner/AppData/Roaming/nvm'
-path_remove '/mnt/c/Program Files/nodejs'
-path_remove '/mnt/c/Program Files/Docker/Docker/resources/bin'
-path_remove '/mnt/c/Users/psahner/AppData/Local/Microsoft/WindowsApps'
-path_remove '/mnt/c/Users/psahner/PortableApps/cmder'

@@ -6,7 +6,8 @@ export EDITOR='vim';
 # Enable persistent REPL history for `node`.
 export NODE_REPL_HISTORY=~/.node_history;
 # Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
+# export NODE_REPL_HISTORY_SIZE='32768';
+export NODE_REPL_HISTORY_SIZE='2000';
 # Use sloppy mode by default, matching web browsers.
 export NODE_REPL_MODE='sloppy';
 
@@ -14,7 +15,8 @@ export NODE_REPL_MODE='sloppy';
 export PYTHONIOENCODING='UTF-8';
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768';
+# export HISTSIZE='32768';
+export HISTSIZE='2000';
 export HISTFILESIZE="${HISTSIZE}";
 # Omit duplicates and commands that begin with a space from history.
 export HISTCONTROL='ignoreboth';
@@ -43,7 +45,10 @@ export BASH_SILENCE_DEPRECATION_WARNING=1;
 
 # set X server display
 # Fix if GUI Apps are not starting (https://github.com/microsoft/wslg/issues/818)
-# if [ -d /tmp/.X11-unix ]; then
-#   export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)
-# fi
-export DISPLAY=host.docker.internal:0
+if [ $(docker --version | grep -c "Docker version") -ge 1 ]; then
+  export DISPLAY=host.docker.internal:0
+elif [ -d /tmp/.X11-unix ]; then
+  export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)
+else; then
+  export DISPLAY=:0
+fi

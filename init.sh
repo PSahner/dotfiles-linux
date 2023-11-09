@@ -18,7 +18,7 @@ while test $# -gt 0; do
       echo "  => needs to be started as root!"
       echo " "
       echo "options:"
-      echo "-h, --help                show brief help"
+      echo "-h, --help                show this help message"
       echo "-u, --user=#              path to user home folder"
       echo "-f, --force               run it without prompts"
       echo "-up, --update             pull newest version"
@@ -216,7 +216,7 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
 
     javaVersion=$(($javaVersion + 0))
     if [ $javaType = "O" ] || [ $javaType = "o" ] || [ $javaType = "S" ] || [ $javaType = "s" ]; then
-        
+
         if [ -n $javaVersion ] && [ $javaVersion -gt 0 ] && [ $javaVersion -lt 100 ]; then
             if [ -f /usr/lib/jvm/.java ]; then
                 rm /usr/lib/jvm/.java
@@ -226,7 +226,7 @@ if [ "$INSTALLJAVA" = "Y" ] || [ "$INSTALLJAVA" = "y" ]; then
             echo "INFO: Downloading Java ...";
             if [ "$javaType" = "O" ] || [ "$javaType" = "o" ]; then
                 echo "INFO:... OpenJDK version: $javaVersion ...";
-                DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-$javaVersion-jdk    
+                DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-$javaVersion-jdk
                 echo "export JAVA_HOME=/usr/lib/jvm/java-$javaVersion-openjdk-amd64" >> /usr/lib/jvm/.java
             elif [ "$javaType" = "S" ] || [ "$javaType" = "s" ]; then
                 echo "INFO:... SapMachine version: $javaVersion ...";
@@ -274,9 +274,9 @@ if [ "$INSTALLNODE" = "Y" ] || [ "$INSTALLNODE" = "y" ]; then
     fi;
 
     echo "INFO: Downloading Node JS ...";
-    
+
     sudo -u $userName curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sudo -u $userName bash
-    
+
     # sudo -u $userName export NVM_DIR="$HOME/.nvm"
     # [ -s "$homePath/.nvm/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -308,7 +308,7 @@ if [ -d $homePath/.npm ]; then
     # else
     #     read -p "Install Yarn globally? (y/n) " YARN;
     # fi;
-    # 
+    #
     # if [ "$YARN" = "Y" ] || [ "$YARN" = "y" ]; then
     #     echo "INFO: Installing Yarn"
     #     bash $homePath/.npm/npm install -g yarn
@@ -332,7 +332,7 @@ if [ -d $homePath/.npm ]; then
             angularVersion=$ANGULARV
             angularVersion=$(($angularVersion + 0))
         fi;
-        
+
         if [ -n $angularVersion ] && [ $angularVersion -gt 0 ] && [ $angularVersion -lt 100 ]; then
             bash $homePath/.npm/npm install -g @angular/cli@$angularVersion
             # sudo -u $userName npm install -g @angular/cli@$angularVersion
@@ -351,7 +351,7 @@ unset ANGULARV
 apt-get clean
 
 # reset arguments before calling bootstrap.sh
-# while [ "${#}" -ge 1 ] ; do 
+# while [ "${#}" -ge 1 ] ; do
 #    unset "${1}"
 #    shift
 # done
