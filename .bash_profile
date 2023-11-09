@@ -13,7 +13,7 @@ path_remove '/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common'
 path_remove '/mnt/c/Program Files/Git/cmd'
 path_remove '/mnt/c/Users/psahner/AppData/Roaming/nvm'
 path_remove '/mnt/c/Program Files/nodejs'
-path_remove '/mnt/c/Program Files/Docker/Docker/resources/bin'
+# path_remove '/mnt/c/Program Files/Docker/Docker/resources/bin'
 path_remove '/mnt/c/Users/psahner/AppData/Local/Microsoft/WindowsApps'
 path_remove '/mnt/c/Users/psahner/PortableApps/cmder'
 

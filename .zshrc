@@ -47,6 +47,10 @@ unset file;
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+### !KEEP IN MIND WHEN UPDATING OH-MY-ZSH!
+# You might need to manually comment out directory aliases again
+# located in `~/.oh-my-zsh/lib/directories.zsh`
+# comment out section `# List directory contents` at the bottom
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
