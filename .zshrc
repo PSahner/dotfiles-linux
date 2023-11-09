@@ -170,10 +170,9 @@ fi
 #   source ~/.mgnl/mgnl
 # fi
 
-for file in ~/.{aliases}; do
-  [ -f "$file" ] && [ -r "$file" ] && source "$file";
-done;
-unset file;
+if [ -f "$HOME/.aliases" ] && [ -r "$HOME/.aliases" ]; then
+  source "$HOME/.aliases"
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
