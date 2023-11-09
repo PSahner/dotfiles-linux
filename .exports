@@ -49,6 +49,6 @@ if [ $(docker --version | grep -c "Docker version") -ge 1 ]; then
   export DISPLAY=host.docker.internal:0
 elif [ -d /tmp/.X11-unix ]; then
   export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)
-else; then
+else
   export DISPLAY=:0
 fi
