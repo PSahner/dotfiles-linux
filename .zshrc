@@ -1,3 +1,9 @@
+### Get information about shell startup time - Part 1/2
+# To get detailed information for ZSH startup (initialization)
+# comment out the following line (`zmodload zsh/zprof`) and also
+# the last line of this file (`zprof`)
+# zmodload zsh/zprof
+
 ### remove unnecessary Win PATHs
 # This can prevent extension-less commands from bleeding into BASH.
 # (eg. "ng" would execute the Win bin if "@angular/cli" wasn't installed on Linux.)
@@ -168,3 +174,9 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+### Get information about shell startup time - Part 2/2
+# To get detailed information for ZSH startup (initialization)
+# comment out the following line (`zprof`) and also
+# the "first" line of this file (`zmodload zsh/zprof`)
+# zprof

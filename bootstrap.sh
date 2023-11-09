@@ -11,9 +11,9 @@ while test $# -gt 0; do
       echo "Dotfiles - bootstrap dotfiles in home folder [~/]"
       echo " "
       echo "options:"
-      echo "-h, --help                show brief help"
+      echo "-h, --help                show this help message"
       echo "-f, --force               run it without prompts"
-      echo "-up, --update              pull newest version"
+      echo "-up, --update             pull newest version"
       echo "-i, --init                do also the init stuff (like setting up WSL Name)"
       echo "-wn, --wsl-name=NAME      specify an identifier to be added to the terminal before your username"
       exit 0
@@ -66,30 +66,30 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 currentDir="$PWD";
 if [ -d "$currentDir/.git" ] && [ $isUpdate -eq 1 ]; then
-	git pull origin main;
+  git pull origin main;
 fi;
 unset currentDir;
 
 doIt() {
-	rsync --exclude ".DS_Store" \
+  rsync --exclude ".DS_Store" \
         --exclude ".git/" \
-		    --exclude ".osx" \
+        --exclude ".osx" \
         --exclude ".vscode" \
-		    --exclude "bootstrap.sh" \
+        --exclude "bootstrap.sh" \
         --exclude "init.sh" \
         --exclude "init-vscode.sh" \
-		    --exclude "README.md" \
-		    -avh --no-perms . ~;
-	source ~/.bash_profile;
+        --exclude "README.md" \
+        -avh --no-perms . ~;
+  source ~/.bash_profile;
 }
 
 if [ $isForce -eq 1 ]; then
-	doIt;
+  doIt;
 else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY;
-	if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
-		doIt;
-	fi;
+  read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " REPLY;
+  if [ $REPLY = "Y" ] || [ $REPLY = "y" ]; then
+    doIt;
+  fi;
 fi;
 unset doIt;
 unset REPLY;
