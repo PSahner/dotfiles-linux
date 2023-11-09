@@ -40,8 +40,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-for file in ~/.{path,exports,aliases,functions,extra}; do
-	[ -f "$file" ] && [ -r "$file" ] && source "$file";
+for file in ~/.{path,exports,functions,extra}; do
+  [ -f "$file" ] && [ -r "$file" ] && source "$file";
 done;
 unset file;
 
@@ -165,6 +165,11 @@ fi
 #   bashcompinit
 #   source ~/.mgnl/mgnl
 # fi
+
+for file in ~/.{aliases}; do
+  [ -f "$file" ] && [ -r "$file" ] && source "$file";
+done;
+unset file;
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
