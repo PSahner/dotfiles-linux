@@ -16,6 +16,10 @@ path_remove '/mnt/c/Program Files/nodejs'
 # path_remove '/mnt/c/Program Files/Docker/Docker/resources/bin'
 path_remove '/mnt/c/Users/psahner/AppData/Local/Microsoft/WindowsApps'
 path_remove '/mnt/c/Users/psahner/PortableApps/cmder'
+path_remove '/mnt/c/Program Files/Azure Data Studio/bin'
+path_remove '/mnt/c/Program Files/Azure Data Studio/bin'
+path_remove '/mnt/c/Program Files (x86)/Microsoft SQL Server/160/DTS/Binn/'
+path_remove '/mnt/c/ProgramData/chocolatey/bin'
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
