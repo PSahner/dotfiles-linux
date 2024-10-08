@@ -45,10 +45,10 @@ export BASH_SILENCE_DEPRECATION_WARNING=1;
 
 # set X server display
 # Fix if GUI Apps are not starting (https://github.com/microsoft/wslg/issues/818)
-if command -v docker > /dev/null; then
-  export DISPLAY=host.docker.internal:0
-elif [ -d /tmp/.X11-unix ]; then
-  export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)
-else
-  export DISPLAY=:0
-fi
+# if command -v docker > /dev/null; then
+#   export DISPLAY=host.docker.internal:0
+# elif [ -d /tmp/.X11-unix ]; then
+#   export DISPLAY=:$(ls /tmp/.X11-unix/ | cut -d "X" -f2)
+# else
+#   export DISPLAY=:0
+# fi
