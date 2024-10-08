@@ -121,6 +121,9 @@ if [ -f "$HOME/.mgnl/mgnl" ]; then
   source ~/.mgnl/mgnl
 fi
 
+# Add PHPBrew
+[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
   export SDKMAN_DIR="$HOME/.sdkman"
