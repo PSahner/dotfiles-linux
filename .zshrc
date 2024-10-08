@@ -32,8 +32,8 @@ path_remove '/mnt/c/ProgramData/chocolatey/bin'
 if [ -x "/usr/bin/keychain" ]; then
   if [ -f "$HOME/.ssh/config" ]; then
     eval ``keychain --eval --agents ssh --confhost --ignore-missing --quiet
-  elif [ -f "$HOME/.ssh/id_rsa" ] || [ -f "$HOME/.ssh/id_ed25519" ]; then
-    eval ``keychain --eval --agents ssh --ignore-missing --quiet id_rsa id_ed25519
+  elif [ -f "$HOME/.ssh/id_ed25519" ] || [ -f "$HOME/.ssh/id_rsa" ]; then
+    eval ``keychain --eval --agents ssh --ignore-missing --quiet id_ed25519 id_rsa
   fi;
 fi
 
